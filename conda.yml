@@ -1,0 +1,8 @@
+name: boards
+channels:
+  - conda-forge
+dependencies:
+  - python==3.6
+  - django
+  - pip:
+      - coverage

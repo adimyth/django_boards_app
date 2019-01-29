@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>HomePage</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+</head>
+<body>
+<nav>
+    <div class="nav-wrapper black row">
+        <div class="col s2">
+            <a href="{% url 'board_app:home' %}" class="white-text">Boards</a>
+        </div>
+    </div>
+</nav>
+<div style="padding:20px"></div>
+<div class="row">
+    <div class="col s3 hide-on-med-and-down"></div>
+    <div class="col s12 m6">
+        <div class="card">
+            <div class="card-content center">
+                <form method="post" novalidate>
+                    {% csrf_token %}
+                    {% for field in form %}
+                    <div class="row">
+                        <div class="input-field">
+                            {{ field.label_tag }}
+                            {{ field }}
+                            <div class="red-text">{{ field.errors }}</div>
+                            {% if field.help_text %}
+                            <small class="form-text text-muted left">
+                                {{ field.help_text|safe }}  <!-- new code here -->
+                            </small>
+                            {% endif %}
+                        </div>
+                    </div>
+                    {% endfor %}
+                    <div class="center" style="padding:10px">
+                        <button class="btn blue waves-effect waves-light" type="submit" name="action">Submit</button>
+                    </div>
+                    <div class="center" style="padding:10px">
+                        <p>Already have an account?
+                            <a class="waves-effect waves-light" href="{% url 'user_accounts_app:login' %}">Login</a>
+                        </p>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

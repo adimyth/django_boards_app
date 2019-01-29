@@ -1,0 +1,26 @@
+[
+  {
+    "model": "board_app.board",
+    "pk": 1,
+    "fields": {
+      "name": "About Django",
+      "description": "A python web framework"
+    }
+  },
+  {
+    "model": "board_app.board",
+    "pk": 2,
+    "fields": {
+      "name": "Circleci",
+      "description": "A continous integration tool"
+    }
+  },
+  {
+    "model": "board_app.board",
+    "pk": 5,
+    "fields": {
+      "name": "Management command in python",
+      "description": "A way to run custom scripts as subcommand to manage.py"
+    }
+  }
+]

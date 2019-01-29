@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Posts Reply</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.css">
+    <script src="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.js"></script>
+    {% load static %}
+    {% block scripts %}
+    <script src="{% static 'js/self.js' %}"></script>
+    {% endblock %}
+    {% load humanize %}
+</head>
+<body>
+<nav>
+    <div class="nav-wrapper black row">
+        <div class="col s2">
+            <a href="{% url 'board_app:home' %}" class="white-text">Boards</a>
+        </div>
+        <div class="col s6"></div>
+        <div class="col s4">
+            <ul id="nav_mobile_logged_out" class="right">
+                <li><a class='dropdown-trigger btn blue' href='#' data-target='dropdown_menu'>Profile</a></li>
+                <ul id='dropdown_menu' class='dropdown-content'>
+                    <li><a href="{% url 'board_app:account' %}">My Account</a></li>
+                    <li><a href="{% url 'user_accounts_app:password_reset' %}">Change Password</a></li>
+                    <li class="divider" tabindex="-1"></li>
+                    <li><a href="{% url 'user_accounts_app:logout' %}">Logout</a></li>
+                </ul>
+            </ul>
+        </div>
+    </div>
+</nav>
+<div style="padding: 20px"></div>
+<div class="container">
+    <nav class="grey lighten-2">
+        <div class="col s12 breadcrumb-nav">
+            <a href="{% url 'board_app:home' %}" class="breadcrumb black-text" style="margin-left:10px">Boards</a>
+            <a href="{% url 'board_app:topics' pk=board.id %}" class="breadcrumb black-text">{{ topic.board }}</a>
+            <a href="{% url 'board_app:posts' pk=board.id topic_id=topic.id %}" class="breadcrumb black-text">{{ topic.subject }}</a>
+        </div>
+    </nav>
+    <div style="padding:20px"></div>
+    <div class="card">
+        <div class="card-content center">
+            <div class="row">
+                <form class="col s12" method="post" novalidate>
+                    {% csrf_token %}
+                    {% for field in form %}
+                    <div class="row">
+                        <div class="input-field col s12 m12">
+                            {{ field.label_tag }}
+                            <div style="padding:20px"></div>
+                            {{ field }}
+                            <div class="red-text">{{ error }}</div>
+                            {% if field.help_text %}
+                            <small class="form-text text-muted">
+                                {{ field.help_text|safe }}  <!-- new code here -->
+                            </small>
+                            {% endif %}
+                        </div>
+                    </div>
+                    {% endfor %}
+                    <div class="left">
+                        <button class="btn waves-effect waves-light blue" type="submit" name="action">Save</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+<script>
+        var simplemde = new SimpleMDE({ element: document.getElementById("id_message") });
+</script>
+</html>

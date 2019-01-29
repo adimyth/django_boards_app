@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>New Topic</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    {% load static %}
+    {% block scripts %}
+    <script src="{% static 'js/self.js' %}"></script>
+    {% endblock %}
+</head>
+<body>
+<nav>
+    <div class="nav-wrapper black row">
+        <div class="col s2">
+            <a href="{% url 'board_app:home' %}" class="white-text">Boards</a>
+        </div>
+        <div class="col s6"></div>
+        <div class="col s4">
+            <ul id="nav_mobile_logged_out" class="right">
+                <li><a class='dropdown-trigger btn blue' href='#' data-target='dropdown_menu'>Profile</a></li>
+                <ul id='dropdown_menu' class='dropdown-content'>
+                    <li><a href="#!">My Account</a></li>
+                    <li><a href="{% url 'user_accounts_app:password_reset' %}">ChangePassword</a></li>
+                    <li class="divider" tabindex="-1"></li>
+                    <li><a href="{% url 'user_accounts_app:logout' %}">Logout</a></li>
+                </ul>
+            </ul>
+        </div>
+    </div>
+</nav>
+<div style="padding: 20px"></div>
+<div class="container">
+    <nav class="grey lighten-2">
+        <div class="col s12">
+            <a href="{% url 'board_app:home' %}" class="breadcrumb black-text" style="margin-left:10px">Boards</a>
+            <a href="{% url 'board_app:topics' board.id %}" class="breadcrumb black-text">{{ board.name }}</a>
+            <a href="{% url 'board_app:new_topic' board.id%}" class="breadcrumb black-text">New Topic</a>
+        </div>
+    </nav>
+    <div class="row">
+        <form class="col s12" method="post" novalidate>
+            {% csrf_token %}
+            <div class="input-field col s6">
+                {{ form.subject.label_tag }}
+                {{ form.subject }}
+                <div class="red-text">{{ form.subject.errors }}</div>
+            </div>
+            <div class="input-field col s12">
+                {{ form.message.label_tag }}
+                {{ form.message }}
+                {{ form.message.help_text }}
+                <div class="red-text">{{ form.message.errors }}</div>
+            </div>
+            <div class="col s12 center">
+                <button class="btn blue waves-effect waves-light" type="submit" name="action">Submit</button>
+            </div>
+        </form>
+    </div>
+</div>
+</body>
+</html>

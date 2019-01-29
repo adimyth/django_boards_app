@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>New Topic</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    {% load static %}
+    {% block scripts %}
+    <script src="{% static 'js/self.js' %}"></script>
+    {% endblock %}
+    {% load humanize %}
+</head>
+<body>
+<nav>
+    <div class="nav-wrapper black row">
+        <div class="col s2">
+            <a href="{% url 'board_app:home' %}" class="white-text">Boards</a>
+        </div>
+        <div class="col s6"></div>
+        <div class="col s4">
+            <ul id="nav_mobile_logged_out" class="right">
+                <li><a class='dropdown-trigger btn blue' href='#' data-target='dropdown_menu'>Profile</a></li>
+                <ul id='dropdown_menu' class='dropdown-content'>
+                    <li><a href="{% url 'board_app:account' %}">My Account</a></li>
+                    <li><a href="{% url 'user_accounts_app:password_reset' %}">Change Password</a></li>
+                    <li class="divider" tabindex="-1"></li>
+                    <li><a href="{% url 'user_accounts_app:logout' %}">Logout</a></li>
+                </ul>
+            </ul>
+        </div>
+    </div>
+</nav>
+<div style="padding: 20px"></div>
+<div class="container">
+    <nav class="grey lighten-2">
+        <div class="col s12">
+            <a href="{% url 'board_app:home' %}" class="breadcrumb black-text" style="margin-left:10px">Boards</a>
+            <a href="{% url 'board_app:topics' board.id %}" class="breadcrumb black-text">{{ board.name }}</a>
+        </div>
+    </nav>
+    <div style="padding-bottom:20px"></div>
+    <div class="col s12 m6">
+        <a class="waves-effect waves-light btn-large blue lighten-1 btn-floating btn-large waves-effect waves-light red" href="{% url 'board_app:new_topic' board.id %}"><i class="material-icons">add</i></a>
+    </div>
+    <table class="highlighted responsive-table">
+        <thead>
+        <tr>
+            <th>Topic</th>
+            <th>Creator</th>
+            <th>Replies</th>
+            <th>Views</th>
+            <th>Last Update</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for topic in board.topics.all %}
+        <tr>
+            <td><a href="{% url 'board_app:posts' pk=board.id topic_id=topic.id %}">{{ topic.subject }}</a></td>
+            <td>{{ topic.created_by.username }}</td>
+            {% if topic.get_posts_count is not None %}
+            <td>{{ topic.get_posts_count }}</td>
+            {% else %}
+            <td style="font-style:italic" class="grey-text">No posts yet</td>
+            {% endif %}
+            <td>{{ topic.views }}</td>
+            <td>{{ topic.last_updated|naturaltime }}</td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+</body>
+</html>

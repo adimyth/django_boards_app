@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>HomePage</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    {% load static %}
+    {% block scripts %}
+    <script src="{% static 'js/self.js' %}"></script>
+    {% endblock %}
+    {% load humanize %}
+</head>
+<body>
+<nav>
+    <div class="nav-wrapper black row">
+        <div class="col s2">
+            <a href="{% url 'board_app:home' %}" class="white-text">Boards</a>
+        </div>
+        <div class="col s1"></div>
+        <div class="col s5">
+            <form method="post" novalidate>
+                {% csrf_token %}
+                <div class="input-field row">
+                    <button class="material-icons white-text col s1 black" type="submit" name="action" style="border:None">
+                        <i class="material-icons right">search</i>
+                    </button>
+                    <div class="col s10">
+                        <input id="search" name="search" type="search" required style="font-color:white; padding: 0; width: 100%; border-bottom:3px solid #00f">
+                    </div>
+
+                    <i class="material-icons white-text col s1">close</i>
+                </div>
+            </form>
+        </div>
+        <div class="col s4">
+            <ul id="nav_mobile_logged_out" class="right">
+                <li><a class='dropdown-trigger btn blue' href='#' data-target='dropdown_menu'>Profile</a></li>
+                <ul id='dropdown_menu' class='dropdown-content'>
+                    <li><a href="{% url 'board_app:account' %}">My Account</a></li>
+                    <li><a href="{% url 'user_accounts_app:password_reset' %}">Change Password</a></li>
+                    <li class="divider" tabindex="-1"></li>
+                    <li><a href="{% url 'user_accounts_app:logout' %}">Logout</a></li>
+                </ul>
+            </ul>
+        </div>
+    </div>
+</nav>
+<div style="padding:20px"></div>
+<div class="row">
+    <div class="col s1 hide-on-med-and-down"></div>
+    <div class="col s12 m10">
+        <div class="card">
+            <div class="card-content center">
+                <table class="highlighted responsive-table">
+                    <thead>
+                    <tr>
+                        <th>Sr. No</th>
+                        <th>Board</th>
+                        <th>Posts</th>
+                        <th>Topics</th>
+                        <th>Last Post by</th>
+                        <th>Last Post at</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for board in all_boards %}
+                    <tr>
+                        <td>{{ board.id }}</td>
+                        <td>
+                            <a href="{%url  'board_app:topics' board.id %}">{{ board.name }}</a> <br>
+                            <small>{{ board.description }}</small>
+                        </td>
+                        <td>{{ board.get_topics_count }}</td>
+                        <td>{{ board.get_posts_count }}</td>
+                        {% if board.get_latest_post_created_by is not None %}
+                        <td>{{ board.get_latest_post_created_by }}</td>
+                        {% else %}
+                        <td style="font-style:italic" class="grey-text">No posts yet</td>
+                        {% endif %}
+                        {% if board.get_latest_post_created_by is not None %}
+                        <td>{{ board.get_latest_post_created_at|naturaltime }}</td>
+                        {% else %}
+                        <td class="grey-text">--</td>
+                        {% endif %}
+                    </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
