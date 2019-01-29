@@ -1,0 +1,21 @@
+# create database
+CREATE DATABASE boards_project;
+
+# create user
+CREATE USER boards_app_user WITH PASSWORD 'boards_app_user';
+
+# grant privileges to user
+GRANT ALL PRIVILEGES ON DATABASE boards_project TO boards_app_user;
+
+# use boards_project
+\c boards_project;
+
+# show tables
+\dt
+
+# login to a db
+psql -d boards_project -U boards_app_user
+
+# django dump data to fixtures
+python manage.py dumpdata board_app --indent 4 --format json > board_app/fixtures/board_app.json
+
