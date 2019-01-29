@@ -5,4 +5,4 @@ pytz
 whitenoise
 django_heroku
 django_user_agents
-python-memcached==1.59
+python-memcached
