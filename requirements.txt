@@ -1,8 +1,30 @@
-django==2.1.5
-markdown==3.0.1
-psycopg2==2.7.7
-coverage==4.5.2
-whitenoise==4.1.2
-gunicorn==19.8.1
-django-heroku==0.3.1
-django-user-agents==0.3.2
+# packages in environment at /home/aditya/miniconda3/envs/boards:
+#
+# Name                    Version                   Build  Channel
+atomicwrites              1.2.1                      py_0    conda-forge
+attrs                     18.2.0                     py_0    conda-forge
+ca-certificates           2018.11.29           ha4d7672_0    conda-forge
+certifi                   2018.11.29            py36_1000    conda-forge
+coverage                  4.5.2            py36h7b6447c_0  
+django                    2.1.5                 py36_1000    conda-forge
+krb5                      1.14.6                        0    conda-forge
+libgcc-ng                 7.3.0                hdf63c60_0    conda-forge
+libpq                     9.6.6                h4e02ad2_0  
+more-itertools            4.3.0                 py36_1000    conda-forge
+ncurses                   5.9                          10    conda-forge
+openssl                   1.0.2p            h14c3975_1002    conda-forge
+pip                       19.0.1                   py36_0    conda-forge
+pluggy                    0.8.1                      py_0    conda-forge
+psycopg2                  2.7.4            py36hb7f436b_0  
+py                        1.7.0                      py_0    conda-forge
+pytest                    4.1.1                    py36_0  
+python                    3.6.0                         2    conda-forge
+pytz                      2018.9                     py_0    conda-forge
+readline                  6.2                           0    conda-forge
+setuptools                40.7.1                   py36_0    conda-forge
+six                       1.12.0                py36_1000    conda-forge
+sqlite                    3.13.0                        1    conda-forge
+tk                        8.5.19                        2    conda-forge
+wheel                     0.32.3                   py36_0    conda-forge
+xz                        5.2.4             h14c3975_1001    conda-forge
+zlib                      1.2.11            h14c3975_1004    conda-forge

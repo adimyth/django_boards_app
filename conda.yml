@@ -9,3 +9,4 @@ dependencies:
       - markdown
       - psycopg2
       - whitenoise
+      - django_heroku
