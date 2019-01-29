@@ -6,3 +6,4 @@ dependencies:
   - django
   - pip:
       - coverage
+      - markdown
