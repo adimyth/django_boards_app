@@ -6,3 +6,4 @@ whitenoise
 django_heroku
 django_user_agents
 python-memcached
+markdown
