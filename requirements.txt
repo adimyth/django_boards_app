@@ -16,3 +16,4 @@ websocket-client==0.48.0
 Werkzeug==0.14.1
 whitenoise==4.1.2
 django_heroku
+memcache
