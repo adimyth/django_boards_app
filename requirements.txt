@@ -7,3 +7,5 @@ django_heroku
 django_user_agents
 python-memcached
 markdown
+dj_database_url
+python-decouple

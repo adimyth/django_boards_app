@@ -11,7 +11,9 @@ https://docs.djangoproject.com/en/2.1/ref/settings/
 """
 
 import os
+import dj_database_url
 import django_heroku
+from decouple import config
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -21,7 +23,6 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/2.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '(n#ir_l#n1ij^@6b$oor4=+ynxzq0qqdk+l#87++scsxx^@k#v'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -81,28 +82,13 @@ WSGI_APPLICATION = 'board_project.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/2.1/ref/settings/#databases
 
-if os.environ['DJANGO_ENV'] == 'prod':
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.postgresql_psycopg2',
-            'NAME': 'db35ubiceqb4tj',
-            'USER': 'sahfjxmjfhklrd',
-            'PASSWORD': '6bdd173824d7d81d69cde9088511fe3682300f23738dfd3974f72425cb9766d1',
-            'HOST': 'ec2-23-23-184-76.compute-1.amazonaws.com',
-            'PORT': '5432',
-        }
-    }
-else:
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.postgresql_psycopg2',
-            'NAME': 'boards_project',
-            'USER': 'boards_app_user',
-            'PASSWORD': 'boards_app_user',
-            'HOST': 'localhost',
-            'PORT': '',
-        }
-    }
+SECRET_KEY = config('SECRET_KEY')
+DEBUG = config('DEBUG', default=False, cast=bool)
+DATABASES = {
+    'default': dj_database_url.config(
+        default=config('DATABASE_URL')
+    )
+}
 
 
 # Password validation
