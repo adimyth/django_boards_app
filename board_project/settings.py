@@ -151,11 +151,8 @@ USER_AGENTS_CACHE = 'default'
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_FILE_PATH = 'tmp/email-messages/'
 EMAIL_HOST = 'smtp.gmail.com'   # mail service smtp
-EMAIL_HOST_USER = 'ebrandzadmi@gmail.com'    # email id
-EMAIL_HOST_PASSWORD = 'Iamnumber1'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
-DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 
 
 # setting locals
