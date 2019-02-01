@@ -58,7 +58,6 @@
                 <table class="highlighted responsive-table">
                     <thead>
                     <tr>
-                        <th>Sr. No</th>
                         <th>Board</th>
                         <th>Posts</th>
                         <th>Topics</th>
@@ -69,7 +68,6 @@
                     <tbody>
                     {% for board in all_boards %}
                     <tr>
-                        <td>{{ board.id }}</td>
                         <td>
                             <a href="{%url  'board_app:topics' board.id %}">{{ board.name }}</a> <br>
                             <small>{{ board.description }}</small>

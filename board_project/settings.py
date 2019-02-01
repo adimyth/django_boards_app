@@ -24,7 +24,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = '(n#ir_l#n1ij^@6b$oor4=+ynxzq0qqdk+l#87++scsxx^@k#v'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['localhost', '127.0.0.1', '.herokuapp.com']
 
@@ -81,16 +81,28 @@ WSGI_APPLICATION = 'board_project.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/2.1/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'boards_project',
-        'USER': 'boards_app_user',
-        'PASSWORD': 'boards_app_user',
-        'HOST': 'localhost',
-        'PORT': '',
+if os.environ['DJANGO_ENV'] == 'prod':
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql_psycopg2',
+            'NAME': 'db35ubiceqb4tj',
+            'USER': 'sahfjxmjfhklrd',
+            'PASSWORD': '6bdd173824d7d81d69cde9088511fe3682300f23738dfd3974f72425cb9766d1',
+            'HOST': 'ec2-23-23-184-76.compute-1.amazonaws.com',
+            'PORT': '5432',
+        }
     }
-}
+else:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql_psycopg2',
+            'NAME': 'boards_project',
+            'USER': 'boards_app_user',
+            'PASSWORD': 'boards_app_user',
+            'HOST': 'localhost',
+            'PORT': '',
+        }
+    }
 
 
 # Password validation
