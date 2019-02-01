@@ -3,6 +3,9 @@
 ### Editors ###
 .idea/
 
+### ENV ###
+.env
+
 ### OSX ###
 .DS_Store
 .AppleDouble
