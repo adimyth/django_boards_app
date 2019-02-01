@@ -23,7 +23,9 @@
         <div class="col s6"></div>
         <div class="col s4">
             <ul id="nav_mobile_logged_out" class="right">
-                <li><a class='dropdown-trigger btn blue' href='#' data-target='dropdown_menu'>Profile</a></li>
+                <li><a class='dropdown-trigger' href='#' data-target='dropdown_menu'><i class="material-icons large" style="font-size: 40px">
+                    account_box
+                </i></a></li>
                 <ul id='dropdown_menu' class='dropdown-content'>
                     <li><a href="{% url 'board_app:account' %}">My Account</a></li>
                     <li><a href="{% url 'user_accounts_app:password_reset' %}">Change Password</a></li>

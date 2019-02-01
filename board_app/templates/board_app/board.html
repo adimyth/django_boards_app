@@ -30,15 +30,16 @@
                     </button>
                     <div class="col s10">
                         <input id="search" name="search" type="search" required style="font-color:white; padding: 0; width: 100%; border-bottom:3px solid #00f">
+                        <i class="material-icons">close</i>
                     </div>
-
-                    <i class="material-icons white-text col s1">close</i>
                 </div>
             </form>
         </div>
         <div class="col s4">
             <ul id="nav_mobile_logged_out" class="right">
-                <li><a class='dropdown-trigger btn blue' href='#' data-target='dropdown_menu'>Profile</a></li>
+                <li><a class='dropdown-trigger' href='#' data-target='dropdown_menu'><i class="material-icons large" style="font-size: 50px">
+                    account_box
+                </i></a></li>
                 <ul id='dropdown_menu' class='dropdown-content'>
                     <li><a href="{% url 'board_app:account' %}">My Account</a></li>
                     <li><a href="{% url 'user_accounts_app:password_reset' %}">Change Password</a></li>
