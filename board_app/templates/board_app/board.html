@@ -70,7 +70,7 @@
                     {% for board in all_boards %}
                     <tr>
                         <td>
-                            <a href="{%url  'board_app:topics' board.id %}">{{ board.name }}</a> <br>
+                            <a href="{%url  'board_app:topics' pk=board.id slug=board.slug %}">{{ board.name }}</a> <br>
                             <small>{{ board.description }}</small>
                         </td>
                         <td>{{ board.get_topics_count }}</td>

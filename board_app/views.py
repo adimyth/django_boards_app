@@ -25,8 +25,8 @@ def home(request):
 
 
 @login_required(login_url='/login/')
-def board_topics(request, pk):
-    board = get_object_or_404(Board, pk=pk)
+def board_topics(request, pk, slug):
+    board = get_object_or_404(Board, pk=pk, slug=slug)
     return render(request, 'board_app/topics.html', {'board': board})
 
 
@@ -58,41 +58,43 @@ def new_topic(request, pk):
 
 
 @login_required(login_url='/login/')
-def posts(request, pk, topic_id):
-    topic = get_object_or_404(Topic, board__pk=pk, pk=topic_id)
+def posts(request, pk, topic_id, board_slug, topic_slug):
+    topic = get_object_or_404(Topic, board__pk=pk, pk=topic_id, slug=topic_slug)
     topic.views += 1
     topic.save()
-    board = get_object_or_404(Board, pk=pk)
+    board = get_object_or_404(Board, pk=pk, slug=board_slug)
     return render(request, 'board_app/posts.html', {'board': board, 'topic': topic})
 
 
 @login_required(login_url='/login/')
-def posts_reply(request, pk, topic_id):
-    topic = get_object_or_404(Topic, board__pk=pk, pk=topic_id)
-    board = get_object_or_404(Board, pk=pk)
+def posts_reply(request, pk, topic_id, board_slug, topic_slug):
+    topic = get_object_or_404(Topic, board__pk=pk, pk=topic_id, slug=topic_slug)
+    board = get_object_or_404(Board, pk=pk, slug=board_slug)
     user = request.user
     if request.method == 'POST':
         form = PostsReplyForm(request.POST)
         if form.is_valid():
-            topic = get_object_or_404(Topic, board__pk=pk, pk=topic_id)
+            topic = get_object_or_404(Topic, board__pk=pk, pk=topic_id, slug=topic_slug)
             Post.objects.create(
                 message=form.cleaned_data.get('message'),
                 topic=topic,
                 created_by=user
             )
-            url = reverse('board_app:posts', kwargs={'pk': board.id, 'topic_id': topic.id})
+            print(f"Board Slug: {board_slug}\nTopic Slug: {topic_slug}")
+            url = reverse('board_app:posts', kwargs={'pk': board.id, 'topic_id': topic.id, 'board_slug': board_slug, 'topic_slug': topic_slug})
             return redirect(url)
     else:
         form = PostsReplyForm()
-    return render(request, 'board_app/posts_reply.html', {'board': board, 'form': form, 'topic': topic})
+    return render(request, 'board_app/posts_reply.html', {'board': board, 'form': form, 'topic': topic, 'board_slug':board_slug, 'topic_slug':topic_slug})
 
 
 @login_required(login_url='/login/')
-def posts_edit(request, pk, topic_id, post_id):
-    board = Board.objects.get(pk=pk)
-    topic = Topic.objects.get(pk=topic_id)
+def posts_edit(request, pk, topic_id, post_id, board_slug, topic_slug):
+    board = Board.objects.get(pk=pk, slug=board_slug)
+    topic = Topic.objects.get(pk=topic_id, slug=topic_slug)
     post = Post.objects.get(pk=post_id)
     form = PostsReplyForm()
+    print(f"TOPIC SLUG: {topic_slug}\nBOARD SLUG: {board_slug}")
     return render(request, 'board_app/edit.html', {'form': form, 'board': board, 'topic': topic, 'post': post})
     # return HttpResponse(f'This is the edit page for {board.name}, {topic.subject}, {post.message}')
 
@@ -106,8 +108,8 @@ class PostsUpdateView(UpdateView):
 
     def get_context_data(self, **kwargs):
         context = super(PostsUpdateView, self).get_context_data(**kwargs)
-        context['board'] = Board.objects.get(pk=self.kwargs.get('pk'))
-        context['topic'] = Topic.objects.get(pk=self.kwargs.get('topic_id'))
+        context['board'] = Board.objects.get(pk=self.kwargs.get('pk'), slug=self.kwargs.get('board_slug'))
+        context['topic'] = Topic.objects.get(pk=self.kwargs.get('topic_id'), slug=self.kwargs.get('topic_slug'))
         return context
 
     def form_valid(self, form):
@@ -116,6 +118,8 @@ class PostsUpdateView(UpdateView):
         post.save()
         url = reverse('board_app:posts', kwargs={'pk': post.topic.board.id,
                                                  'topic_id': post.topic.id,
+                                                 'board_slug': self.kwargs.get('board_slug'),
+                                                 'topic_slug': self.kwargs.get('topic_slug')
                                                  })
         return redirect(url)
 
@@ -148,5 +152,7 @@ class PostsDeleteView(DeleteView):
 
     def get_success_url(self):
         return reverse('board_app:posts', kwargs={'pk': self.kwargs.get('pk'),
-                                                  'topic_id': self.kwargs.get('topic_id')
+                                                  'topic_id': self.kwargs.get('topic_id'),
+                                                  'board_slug': self.kwargs.get('board_slug'),
+                                                  'topic_slug': self.kwargs.get('topic_slug')
                                                   })

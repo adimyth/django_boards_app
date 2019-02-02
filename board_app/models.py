@@ -2,14 +2,20 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.utils.safestring import mark_safe
 from markdown import markdown
+from django.utils.text import slugify
 
 
 class Board(models.Model):
     name = models.CharField(max_length=50, unique=True)
     description = models.CharField(max_length=100)
+    slug = models.SlugField(null=True)
 
     def __str__(self):
         return self.name
+
+    def save(self, *args, **kwargs):
+        self.slug = slugify(self.name)
+        super(Board, self).save(*args, **kwargs)
 
     def get_topics_count(self):
         board = Board.objects.get(name=self)
@@ -41,6 +47,7 @@ class Topic(models.Model):
     views = models.IntegerField(default=0)
     board = models.ForeignKey(Board, related_name='topics', on_delete='cascade')
     created_by = models.ForeignKey(User, related_name='topics', on_delete='cascade')
+    slug = models.SlugField(null=True)
 
     def __str__(self):
         return self.subject
@@ -48,6 +55,10 @@ class Topic(models.Model):
     def get_posts_count(self):
         topic = Topic.objects.get(subject=self)
         return topic.posts.count()
+
+    def save(self, *args, **kwargs):
+        self.slug = slugify(self)
+        super(Topic, self).save(*args, **kwargs)
 
 
 class Post(models.Model):

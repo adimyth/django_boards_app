@@ -41,7 +41,7 @@
     <nav class="grey lighten-2">
         <div class="col s12">
             <a href="{% url 'board_app:home' %}" class="breadcrumb black-text" style="margin-left:10px">Boards</a>
-            <a href="{% url 'board_app:topics' board.id %}" class="breadcrumb black-text">{{ board.name }}</a>
+            <a href="{% url 'board_app:topics' pk=board.id slug=board.slug %}" class="breadcrumb black-text">{{ board.name }}</a>
         </div>
     </nav>
     <div style="padding-bottom:20px"></div>
@@ -61,7 +61,7 @@
         <tbody>
         {% for topic in board.topics.all %}
         <tr>
-            <td><a href="{% url 'board_app:posts' pk=board.id topic_id=topic.id %}">{{ topic.subject }}</a></td>
+            <td><a href="{% url 'board_app:posts' pk=board.id topic_id=topic.id board_slug=board.slug topic_slug=topic.slug %}">{{ topic.subject }}</a></td>
             <td>{{ topic.created_by.username }}</td>
             {% if topic.get_posts_count is not None %}
             <td>{{ topic.get_posts_count }}</td>
