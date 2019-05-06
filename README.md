@@ -1,5 +1,5 @@
 # Boards App
-A simple Django app. Checkout the app [here](https://django-boards-app.herokuapp.com/boards)
+A full fledged Django powered app. Checkout the app [here](https://django-boards-app.herokuapp.com/boards)
 
 ## Key Features
 * Authentication
