@@ -1,0 +1,22 @@
+html,
+body {
+	margin: 0;
+	height: 100%;
+	overflow: hidden;
+	font-family: "UberMove";
+	font-weight: normal;
+}
+
+@font-face {
+	font-family: "UberMove";
+	src: url("/static/fonts/UberMove-Regular.woff2");
+	font-weight: normal;
+	font-style: normal;
+}
+
+@font-face {
+	font-family: "UberMove";
+	src: url("/static/fonts/UberMove-Bold.woff2");
+	font-weight: bold;
+	font-style: normal;
+}

@@ -6,9 +6,11 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     {% load static %}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
     {% block scripts %}
     <script src="{% static 'js/self.js' %}"></script>
     {% endblock %}
@@ -40,7 +42,7 @@
     <nav class="grey lighten-2">
         <div class="col s12">
             <a href="{% url 'board_app:home' %}" class="breadcrumb black-text" style="margin-left:10px">Boards</a>
-            <a href="{% url 'board_app:topics' board.id %}" class="breadcrumb black-text">{{ board.name }}</a>
+            <a href="{% url 'board_app:topics' pk=board.id slug=board.slug %}" class="breadcrumb black-text">{{ board.name }}</a>
             <a href="{% url 'board_app:new_topic' board.id%}" class="breadcrumb black-text">New Topic</a>
         </div>
     </nav>
