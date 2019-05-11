@@ -7,7 +7,7 @@ from . import views
 app_name = 'board_app'
 # (?P < name > pattern)
 urlpatterns = [
-    path('boards/', views.home, name='home'),
+    path('', views.home, name='home'),
     re_path(r'^boards/(?P<pk>\d+)/(?P<slug>[\w-]+)/$', views.board_topics, name='topics'),
     re_path(r'^boards/(?P<pk>\d+)/new$', views.new_topic, name='new_topic'),
     re_path(r'^boards/(?P<pk>\d+)/(?P<board_slug>[\w-]+)/(?P<topic_id>\d+)/(?P<topic_slug>[\w-]+)$', views.posts, name='posts'),
