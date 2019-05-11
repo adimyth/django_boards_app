@@ -21,7 +21,7 @@ def home(request):
         if query != '':
             all_boards = Board.objects.annotate(search=SearchVector('name', 'description'),).filter(search=query)
     all_boards = sorted(list(all_boards),  key=lambda x: x.name)
-    return render(request, 'board_app/board.html', {'all_boards': all_boards})
+    return render(request, 'board_app/index.html', {'all_boards': all_boards})
 
 
 @login_required(login_url='/login/')
